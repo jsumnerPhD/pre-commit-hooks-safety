@@ -22,6 +22,8 @@ def main(argv=None):
         if error.code != 0:
             return 1
 
+    _precommit_venv = subprocess.run(["pip", "freeze"], stdout=subprocess.PIPE)
+
     for file in argv:
         try:
             # Build virtual environments to force pinning of versions
@@ -29,6 +31,10 @@ def main(argv=None):
             check.main(['--full-report'])
         except SystemExit as error:
             subprocess.run(["pip", "uninstall", "-y", "-r", str(file)])
+            _current_venv = subprocess.run(["pip", "freeze"], stdout=subprocess.PIPE)
+            for pkg in _precommit_venv.stdout.decode().split('\n'):
+                if pkg and pkg not in _current_venv.stdout.decode().split('\n'):
+                    subprocess.run(["pip", "install", pkg])
             if error.code != 0:
                 return 1
 
