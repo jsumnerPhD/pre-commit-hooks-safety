@@ -6,11 +6,14 @@ import sys
 from safety.cli import check
 
 
-def main(argv):
+def main(argv=None):
     '''
     - Pass files with 'requirement' in the filename as args to safety
     - Build each file into virtualenv (to pin versions) and call safety on venv
     '''
+
+    if not argv:
+        argv = sys.argv[1:]
 
     try:
         # Check *requirement* files
@@ -31,4 +34,4 @@ def main(argv):
             return 0
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(main())
