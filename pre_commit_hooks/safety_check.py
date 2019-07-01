@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import logging
 import subprocess
 import sys
 
@@ -12,19 +13,25 @@ def main(argv=None):
     - Build each file into virtualenv (to pin versions) and call safety on venv
     '''
 
+    logging.info('Preparing argv...')
     if not argv:
         argv = sys.argv[1:]
+    logging.info(argv)
 
+    logging.info('Checking requirements files...')
     try:
         # Check *requirement* files
         check.main(['--full-report'] + sum((['-r', f] for f in argv), []))
     except SystemExit as error:
         if error.code != 0:
+            logging.info('...failed!')
             return 1
+        logging.info('...passed')
 
     _precommit_venv = subprocess.run(["pip", "freeze"], stdout=subprocess.PIPE)
 
     for file in argv:
+        logging.info('Building virtualenv for %s and checking...', file)
         try:
             # Build virtual environments to force pinning of versions
             subprocess.run(["pip", "install", "-r", str(file)])
@@ -36,7 +43,9 @@ def main(argv=None):
                 if pkg and pkg not in _current_venv.stdout.decode().split('\n'):
                     subprocess.run(["pip", "install", pkg])
             if error.code != 0:
+                logging.info('...failed!')
                 return 1
+            logging.info('...passed')
 
     return 0
 
