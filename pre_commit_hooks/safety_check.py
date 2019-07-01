@@ -28,7 +28,7 @@ def main(argv=None):
             subprocess.run(["pip", "install", "-r", str(file)])
             check.main(['--full-report'])
         except SystemExit as error:
-            subprocess.run(["pip", "uninstall", "-ry", str(file)])
+            subprocess.run(["pip", "uninstall", "-y", "-r", str(file)])
             if error.code != 0:
                 return 1
 
