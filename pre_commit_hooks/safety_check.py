@@ -1,6 +1,8 @@
 from __future__ import print_function
+
 import subprocess
 import sys
+
 from safety.cli import check
 
 
@@ -26,7 +28,7 @@ def main(argv):
         except SystemExit as error:
             if error.code == 0:
                 return 0
-                
+
     return 1
 
 
