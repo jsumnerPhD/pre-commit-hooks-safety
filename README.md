@@ -9,7 +9,7 @@ It also installs each `requirements` file (and subsequently uninstalls) and runs
 ## Usage
 ```
 -   repo: https://github.com/jsumnerPhD/pre-commit-hooks-safety
-    sha: v1.1.3
+    rev: v1.1.7
     hooks:
     -   id: python-safety-dependencies-check-all
 ```
