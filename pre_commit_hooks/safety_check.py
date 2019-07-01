@@ -22,7 +22,7 @@ def main(argv):
     for file in argv:
         try:
             # Build virtual environments to force pinning of versions
-            subprocess.run(["pip", "install", "-r", "--no-cache-dir", "--force-reinstall", str(file)])
+            subprocess.run(["pip", "install", "--no-cache-dir", "--force-reinstall", "-r", str(file)])
             check.main(['--full-report'])
             subprocess.run(["pip", "uninstall", "-ry", str(file)])
         except SystemExit as error:
