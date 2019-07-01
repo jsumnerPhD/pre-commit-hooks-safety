@@ -6,7 +6,7 @@ import sys
 from safety.cli import check
 
 
-def main(argv=None):
+def main(argv):
     '''
     - Pass files with 'requirement' in the filename as args to safety
     - Build each file into virtualenv (to pin versions) and call safety on venv
