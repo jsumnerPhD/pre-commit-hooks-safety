@@ -26,11 +26,10 @@ def main(argv):
             check.main(['--full-report'])
             subprocess.run(["pip", "uninstall", "-ry", str(file)])
         except SystemExit as error:
-            if error.code == 0:
-                return 0
+            if error.code != 0:
+                return 1
 
-    return 1
-
+    return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
