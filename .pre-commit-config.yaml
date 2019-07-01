@@ -24,6 +24,7 @@ repos:
     hooks:
     -   id: python-safety-dependencies-check
         always_run: True
+        verbose: True
 -   repo: local
     hooks:
     -   id: py.test
